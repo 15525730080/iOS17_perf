@@ -2,6 +2,7 @@
 # @Author: 范博洲
 import dataclasses
 import os
+import platform
 import re
 import subprocess
 import sys
@@ -27,7 +28,11 @@ class TunnelManager:
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT)
             while not rp.poll():
-                line = rp.stdout.readline().decode()
+                try:
+                    line = rp.stdout.readline().decode()
+                except:
+                    print("decode fail {0}".format(line))
+                    continue
                 line = line.strip()
                 if line:
                     print(line)
@@ -94,7 +99,11 @@ class PerformanceAnalyzer:
 
 
 if __name__ == '__main__':
-    assert os.geteuid() == 0, "必须使用sudo或管理员权限启动"
+    if "Windows" in platform.platform():
+        import ctypes
+        assert ctypes.windll.shell32.IsUserAnAdmin() == 1, "必须使用管理员权限启动"
+    else:
+        assert os.geteuid() == 0, "必须使用sudo权限启动"
     bundle_id = "com.alipay.iphoneclient"
     udid = "00008110-0012148E1E8B801E"
     tunnel_manager = TunnelManager()
