@@ -1,2 +1,0 @@
-py_ios_device
-pymobiledevice3
