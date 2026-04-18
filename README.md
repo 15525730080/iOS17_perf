@@ -1,3 +1,6 @@
+# 直接可用参考 https://github.com/15525730080/client_perf/blob/main/client_perf/core/ios_tools.py
+
+
 # iOS17_perf
 ios17以上设备性能统计脚本/IOS 17 and above device performance statistics script
 
